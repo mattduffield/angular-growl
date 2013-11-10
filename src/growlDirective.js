@@ -28,7 +28,10 @@ angular.module("angular-growl").directive("growl", ["$rootScope", function ($roo
 				if (index > -1) {
 					$scope.messages.splice(index, 1);
 				}
-
+				// try and execute any callback
+        if (typeof(message.callback) == 'function') {
+          message.callback();
+        }						
 			};
 
 			$scope.computeClasses = function (message) {

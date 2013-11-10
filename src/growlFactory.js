@@ -86,7 +86,7 @@ angular.module("angular-growl").provider("growl", function() {
 			$rootScope.$broadcast("growlMessage", message);
 		}
 
-		function sendMessage(text, config, severity) {
+		function sendMessage(text, config, severity, callback) {
 			var _config = config || {}, message;
 
 			message = {
@@ -95,7 +95,8 @@ angular.module("angular-growl").provider("growl", function() {
 				isError: severity.isError,
 				isInfo: severity.isInfo,
 				isSuccess: severity.isSuccess,
-				ttl: _config.ttl || _ttl
+				ttl: _config.ttl || _ttl,
+				callback: callback
 			};
 
 			broadcastMessage(message);
@@ -106,9 +107,10 @@ angular.module("angular-growl").provider("growl", function() {
 		 *
 		 * @param {string} text
 		 * @param {{ttl: number}} config
+		 * @param {function} callback
 		 */
-		function addWarnMessage(text, config) {
-			sendMessage(text, config, {isWarn: true});
+		function addWarnMessage(text, config, callback) {
+			sendMessage(text, config, {isWarn: true}, callback);
 		}
 
 		/**
@@ -116,9 +118,10 @@ angular.module("angular-growl").provider("growl", function() {
 		 *
 		 * @param {string} text
 		 * @param {{ttl: number}} config
+		 * @param {function} callback
 		 */
-		function addErrorMessage(text, config) {
-			sendMessage(text, config, {isError: true});
+		function addErrorMessage(text, config, callback) {
+			sendMessage(text, config, {isError: true}, callback);
 		}
 
 		/**
@@ -126,9 +129,10 @@ angular.module("angular-growl").provider("growl", function() {
 		 *
 		 * @param {string} text
 		 * @param {{ttl: number}} config
+		 * @param {function} callback
 		 */
-		function addInfoMessage(text, config) {
-			sendMessage(text, config, {isInfo: true});
+		function addInfoMessage(text, config, callback) {
+			sendMessage(text, config, {isInfo: true}, callback);
 		}
 
 		/**
@@ -136,9 +140,10 @@ angular.module("angular-growl").provider("growl", function() {
 		 *
 		 * @param {string} text
 		 * @param {{ttl: number}} config
+		 * @param {function} callback
 		 */
-		function addSuccessMessage(text, config) {
-			sendMessage(text, config, {isSuccess: true});
+		function addSuccessMessage(text, config, callback) {
+			sendMessage(text, config, {isSuccess: true}, callback);
 		}
 
 		/**
