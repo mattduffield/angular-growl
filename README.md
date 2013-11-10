@@ -86,6 +86,8 @@ app.controller("demoCtrl", ['$scope', 'growl', function($scope, growl) {
     }
 }]);
 ````
+If you wanted to be notified when the message either closes automatically or when the user closes the message, you can provide a callback function to be executed.  This allows you to clear forms or provide any other specific logic that you wish to perform.
+
 
 If [angular-translate](https://github.com/PascalPrecht/angular-translate) is present, its filter is automatically called for translating of messages, so you have to provide
 only the key:
