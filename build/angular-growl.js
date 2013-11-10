@@ -1,6 +1,6 @@
 /**
- * angular-growl - v0.3.1 - 2013-10-01
- * https://github.com/marcorinck/angular-growl
+ * angular-growl - v0.3.2 - 2013-11-10
+ * https://github.com/mattduffield/angular-growl
  * Copyright (c) 2013 Marco Rinck; Licensed MIT
  */
 angular.module('angular-growl', []);
@@ -30,6 +30,9 @@ angular.module('angular-growl').directive('growl', [
             var index = $scope.messages.indexOf(message);
             if (index > -1) {
               $scope.messages.splice(index, 1);
+            }
+            if (typeof message.callback === 'function') {
+              message.callback();
             }
           };
           $scope.computeClasses = function (message) {
@@ -98,7 +101,7 @@ angular.module('angular-growl').provider('growl', function () {
         }
         $rootScope.$broadcast('growlMessage', message);
       }
-      function sendMessage(text, config, severity) {
+      function sendMessage(text, config, severity, callback) {
         var _config = config || {}, message;
         message = {
           text: text,
@@ -106,21 +109,22 @@ angular.module('angular-growl').provider('growl', function () {
           isError: severity.isError,
           isInfo: severity.isInfo,
           isSuccess: severity.isSuccess,
-          ttl: _config.ttl || _ttl
+          ttl: _config.ttl || _ttl,
+          callback: callback
         };
         broadcastMessage(message);
       }
-      function addWarnMessage(text, config) {
-        sendMessage(text, config, { isWarn: true });
+      function addWarnMessage(text, config, callback) {
+        sendMessage(text, config, { isWarn: true }, callback);
       }
-      function addErrorMessage(text, config) {
-        sendMessage(text, config, { isError: true });
+      function addErrorMessage(text, config, callback) {
+        sendMessage(text, config, { isError: true }, callback);
       }
-      function addInfoMessage(text, config) {
-        sendMessage(text, config, { isInfo: true });
+      function addInfoMessage(text, config, callback) {
+        sendMessage(text, config, { isInfo: true }, callback);
       }
-      function addSuccessMessage(text, config) {
-        sendMessage(text, config, { isSuccess: true });
+      function addSuccessMessage(text, config, callback) {
+        sendMessage(text, config, { isSuccess: true }, callback);
       }
       function addServerMessages(messages) {
         var i, message, severity, length;
